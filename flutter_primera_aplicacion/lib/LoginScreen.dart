@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _userController,
                 decoration: InputDecoration(
-                  labelText: "Usuario",
+                  labelText: "User",
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.person),
                 ),
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  labelText: "Contraseña",
+                  labelText: "Password:",
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.lock),
                 ),
