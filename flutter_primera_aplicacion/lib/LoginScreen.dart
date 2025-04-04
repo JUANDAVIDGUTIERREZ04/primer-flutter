@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'auth_service.dart';
 import 'HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,19 +11,32 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _login() {
+  void _login() async {
     String username = _userController.text.trim();
     String password = _passwordController.text.trim();
 
-    if (username == "juan" && password == "321") {
-      Navigator.push(
+    if (username.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Por favor ingrese usuario y contraseña"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    String? token = await AuthService().login(username, password);
+
+    if (token != null) {
+      // Si el token es válido, navega a la pantalla de inicio
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => HomeScreen(token: token)),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Corregir usuario o contraseña"),
+          content: Text("Usuario o contraseña incorrectos"),
           backgroundColor: Colors.red,
         ),
       );
@@ -52,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _userController,
                 decoration: InputDecoration(
-                  labelText: "User",
+                  labelText: "Usuario",
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.person),
                 ),
@@ -61,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  labelText: "Password:",
+                  labelText: "Contraseña:",
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.lock),
                 ),
