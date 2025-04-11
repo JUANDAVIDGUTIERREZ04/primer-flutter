@@ -28,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
     String? token = await AuthService().login(username, password);
 
     if (token != null) {
-      // Si el token es válido, navega a la pantalla de inicio
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen(token: token)),
@@ -46,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black, // Fondo negro
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -58,40 +58,49 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blueAccent,
+                  color: Colors.amber, // Dorado
                 ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 30),
               TextField(
                 controller: _userController,
+                style: TextStyle(color: Colors.white), // Texto blanco
                 decoration: InputDecoration(
                   labelText: "Usuario",
+                  labelStyle: TextStyle(color: Colors.teal), // Azulejo
+                  filled: true,
+                  fillColor: Colors.grey[850], // Fondo gris oscuro
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
+                  prefixIcon: Icon(Icons.person, color: Colors.teal),
                 ),
               ),
               SizedBox(height: 20),
               TextField(
                 controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: "Contraseña:",
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
-                ),
                 obscureText: true,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: "Contraseña",
+                  labelStyle: TextStyle(color: Colors.teal),
+                  filled: true,
+                  fillColor: Colors.grey[850],
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.lock, color: Colors.teal),
+                ),
               ),
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey[850],
                   padding: EdgeInsets.symmetric(vertical: 15),
                   textStyle: TextStyle(fontSize: 18),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Text("Ingresar"),
+                child: Text("Ingresar", style: TextStyle(color: Colors.amber)),
               ),
             ],
           ),
